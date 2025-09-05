@@ -654,11 +654,11 @@ with tab2:
         latest_month = sorted(history.keys())[-1]
         latest_data = history[latest_month]
 
-        if not latest_data.get("by_category"):
-            if latest_data.get("items"):
-                latest_data = calculate_emissions(latest_data["items"])
-                history[latest_month] = latest_data
-                save_history(history)
+        if not latest_data or not latest_data.get("by_category"):
+                if latest_data and latest_data.get("items"):
+                    latest_data = calculate_emissions(latest_data["items"])
+                    history[latest_month] = latest_data
+
 
         if latest_data.get("by_category"):
             categories = list(latest_data["by_category"].keys())
@@ -860,3 +860,4 @@ with st.expander("ℹ️ Emission Factors Used"):
                  use_container_width=True, hide_index=True)
     st.write("*Note: These are standard emission factors and may vary by region and waste management practices.*")
 st.markdown('</div>', unsafe_allow_html=True)
+
